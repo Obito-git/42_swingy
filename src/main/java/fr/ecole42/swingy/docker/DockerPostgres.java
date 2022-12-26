@@ -9,16 +9,19 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DockerPostgres {
 	private ProcessBuilder processBuilder;
-	private static final String dockerComposePath = System.getProperty("user.dir") + "/src/postgres/docker-compose.yml";
+	private static final String postgresFolder = System.getProperty("user.dir") + "/src/postgres/";
+	private static final String dockerComposePath = postgresFolder + "docker-compose.yml";
 	private static final String launchCommand = "docker-compose -f " + dockerComposePath + " up -d";
 	private static final String containerName = "postgres";
 	private static final String stopCommand = "docker stop " + containerName;
 
 	public DockerPostgres() {
+		createDataFolder();
 		processBuilder = new ProcessBuilder();
 		processBuilder.command("bash", "-c", launchCommand);
 
@@ -35,9 +38,22 @@ public class DockerPostgres {
 		}
 	}
 
+	private void createDataFolder() {
+		String directoryName = postgresFolder.concat("data");
+
+		File directory = new File(directoryName);
+		if (!directory.exists()){
+			if (!directory.mkdir()) {
+				System.out.println("Can't create postgres data folder");
+				System.exit(4);
+			}
+		}
+	}
+
 	public void waitContainer() throws InterruptedException {
 		while (true) {
-			Thread.sleep(5000);
+			System.out.println("Waiting container");
+
 			final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
 					.configure() // configures settings from hibernate.cfg.xml
 					.build();
@@ -54,7 +70,9 @@ public class DockerPostgres {
 				break;
 
 			} catch (Exception ignored) {
+				System.out.println(ignored.getMessage());
 			}
+			Thread.sleep(5000);
 		}
 
 		System.out.println("Container ok, connection ok");

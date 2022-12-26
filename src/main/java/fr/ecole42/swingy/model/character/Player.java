@@ -15,15 +15,14 @@ public class Player {
 	@Id
 	@Column(name = "player_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	@NotEmpty(message = "Name can't be empty")
 	@Size(min = 2, max = 30, message = "Name should be from 2 to 30 characters")
 	@Column(name = "name", length = 128, nullable = true, unique = true)
 	private String name;
 
-	@ElementCollection
-	@Column (name = "characters")
-	private List<Character> characters = new ArrayList<Character>();
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Character> characters = new ArrayList<>();
 
 	public Player(String name) {
 		this.name = name;
@@ -33,7 +32,24 @@ public class Player {
 
 	}
 
+	public List<Character> getCharacters() {
+		return characters;
+	}
+
+	public void setCharacters(List<Character> characters) {
+		this.characters = characters;
+	}
+
 	public void addCharacter(Character character) {
 		this.characters.add(character);
+	}
+
+	@Override
+	public String toString() {
+		return "Player{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", characters=" + characters +
+				'}';
 	}
 }

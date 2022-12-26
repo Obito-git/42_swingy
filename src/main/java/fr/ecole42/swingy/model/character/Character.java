@@ -1,11 +1,9 @@
 package fr.ecole42.swingy.model.character;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
-@Embeddable
+@Entity
+@Table(name = "Character")
 public class Character {
 	@Column (name = "level")
 	private int level;
@@ -20,6 +18,9 @@ public class Character {
 	private int defence;
 	@Column (name = "hp")
 	private int hp;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	public Character(int level, PlayerClass heroPlayerClass, int experience, int attack, int defence, int hp) {
 		this.level = level;

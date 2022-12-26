@@ -8,9 +8,11 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">true</property>
-
+        <property name="hibernate.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
         <mapping class="fr.ecole42.swingy.model.character.Player" />
+        <mapping class="fr.ecole42.swingy.model.character.Character" />
 
     </session-factory>
 </hibernate-configuration>

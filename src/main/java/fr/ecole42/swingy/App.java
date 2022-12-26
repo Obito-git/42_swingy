@@ -1,20 +1,13 @@
 package fr.ecole42.swingy;
 
+import fr.ecole42.swingy.config.SpringConfig;
+import fr.ecole42.swingy.controller.GameController;
 import fr.ecole42.swingy.docker.DockerPostgres;
-import fr.ecole42.swingy.model.character.CharacterDirector;
-import fr.ecole42.swingy.model.character.Player;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-/**
- * Hello world!
- *
- */
 public class App {
+
     private static boolean isConsoleMode(String[] args) throws IllegalArgumentException {
         if (args.length == 2) {
             if (args[1].equalsIgnoreCase("console"))
@@ -45,6 +38,17 @@ public class App {
             System.exit(2);
         }
 
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        GameController gameController = (GameController) context.getBean(GameController.class);
+        //gameController.addInit();
+        gameController.show_all();
+        //System.out.println(gameController.id(1));
+
+
+        //System.out.println(isConsoleModeTest);
+
+        /*
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
@@ -54,11 +58,13 @@ public class App {
             Session session = factory.openSession();
             Transaction transaction = session.beginTransaction();
 
-            Player p = new Player("name");
-            p.addCharacter(CharacterDirector.buildWarrior());
-            p.addCharacter(CharacterDirector.buildHunter());
-            p.addCharacter(CharacterDirector.buildMage());
-            session.save(p);
+            //Player p = new Player("name3");
+            //p.addCharacter(CharacterDirector.buildWarrior());
+            //p.addCharacter(CharacterDirector.buildMage());
+            //session.save(p);
+            List<Player> players = session.createQuery("FROM Player").getResultList();
+            for (Player player: players)
+                System.out.println(player);
             transaction.commit();
 
             session.close();
@@ -67,7 +73,7 @@ public class App {
         } catch (Exception ignored) {
         }
 
-
+         */
 
         /*
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
