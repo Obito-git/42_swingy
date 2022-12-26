@@ -41,7 +41,7 @@ public class App {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         GameController gameController = (GameController) context.getBean(GameController.class);
-        //gameController.addInit();
+        gameController.addInit();
         gameController.show_all();
         //System.out.println(gameController.id(1));
 

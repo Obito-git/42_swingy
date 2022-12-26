@@ -20,7 +20,7 @@ public class Character {
 	private int hp;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 
 	public Character(int level, PlayerClass heroPlayerClass, int experience, int attack, int defence, int hp) {
 		this.level = level;

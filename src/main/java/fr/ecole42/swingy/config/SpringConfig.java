@@ -16,11 +16,6 @@ import java.util.Properties;
 @ComponentScan("fr.ecole42.swingy")
 @EnableTransactionManagement
 public class SpringConfig {
-	@Bean (name = "mode")
-	public int lolMode() {
-		return 42;
-	}
-
 	@Bean
 	public DataSource dataSource() {
 		org.hibernate.cfg.Configuration conf = new org.hibernate.cfg.Configuration().configure("hibernate.cfg.xml");

@@ -1,13 +1,11 @@
 package fr.ecole42.swingy.docker;
 
-import fr.ecole42.swingy.model.character.Player;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 import java.io.IOException;
