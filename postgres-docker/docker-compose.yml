@@ -7,7 +7,8 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - /Users/amyroshn/IdeaProjects/swingy/src/postgres/data:/var/lib/postgresql/data
+      - /mnt/nfs/homes/amyroshn/goinfre/database:/var/lib/postgresql/data
+      #       - /Users/amyroshn/IdeaProjects/swingy/src/postgres/data:/var/lib/postgresql/data
     env_file:
       - ./config/postgres.env
 volumes:

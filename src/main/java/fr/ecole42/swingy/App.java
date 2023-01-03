@@ -2,7 +2,11 @@ package fr.ecole42.swingy;
 
 import fr.ecole42.swingy.config.SpringConfig;
 import fr.ecole42.swingy.controller.GameController;
-import fr.ecole42.swingy.docker.DockerPostgres;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -29,15 +33,11 @@ public class App {
             System.exit(1);
         }
 
-        DockerPostgres docker = new DockerPostgres();
-        try {
-            docker.waitContainer();
-        } catch (InterruptedException e) {
-            System.out.println("Can't launch database container");
-            docker.closeContainer();
-            System.exit(2);
-        }
-
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        SessionFactory factory = new MetadataSources(registry)
+                .buildMetadata().buildSessionFactory();
 
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         GameController gameController = (GameController) context.getBean(GameController.class);
