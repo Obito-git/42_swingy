@@ -1,6 +1,6 @@
 package fr.ecole42.swingy.dao;
 
-import fr.ecole42.swingy.model.character.Character;
+import fr.ecole42.swingy.model.hero.Hero;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,19 @@ public class CharacterDAO {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Character> index() {
+	public List<Hero> index() {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Character", Character.class).getResultList();
+		return session.createQuery("from Hero", Hero.class).getResultList();
 	}
 
 	@Transactional(readOnly = true)
-	public Character id(int id) {
+	public Hero id(int id) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(Character.class, id);
+		return session.get(Hero.class, id);
 	}
 
 	@Transactional(readOnly = false)
-	public void save(Character player) {
+	public void save(Hero player) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(player);
 	}

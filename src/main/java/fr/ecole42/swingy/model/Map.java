@@ -1,13 +1,13 @@
 package fr.ecole42.swingy.model;
 
-import fr.ecole42.swingy.model.character.Character;
+import fr.ecole42.swingy.model.hero.Hero;
 
 public class Map {
 	private int size;
-	private Character character;
+	private Hero hero;
 
-	public Map(Character character) {
-		this.character = character;
+	public Map(Hero hero) {
+		this.hero = hero;
 		//size = (player.getLevel() - 1) * 5 + 10 - (player.getLevel() % 2);
 	}
 

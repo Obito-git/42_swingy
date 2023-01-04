@@ -1,7 +1,7 @@
 package fr.ecole42.swingy.controller;
 
 import fr.ecole42.swingy.dao.CharacterDAO;
-import fr.ecole42.swingy.model.character.Character;
+import fr.ecole42.swingy.model.hero.Hero;
 import fr.ecole42.swingy.view.ViewModes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ public class GameController {
 	}
 	 */
 
-	public void save(Character c) {
+	public void save(Hero c) {
 		characterDAO.save(c);
 	}
 }

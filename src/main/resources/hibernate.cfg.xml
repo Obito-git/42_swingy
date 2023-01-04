@@ -11,6 +11,6 @@
         <property name="hibernate.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
-        <mapping class="fr.ecole42.swingy.model.character.Character" />
+        <mapping class="fr.ecole42.swingy.model.hero.Hero" />
     </session-factory>
 </hibernate-configuration>
