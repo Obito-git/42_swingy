@@ -1,12 +1,8 @@
 package fr.ecole42.swingy.controller;
 
 import fr.ecole42.swingy.dao.PlayerDAO;
-import fr.ecole42.swingy.model.character.CharacterDirector;
-import fr.ecole42.swingy.model.character.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class GameController {
@@ -18,6 +14,7 @@ public class GameController {
 
 	}
 
+	/*
 	public void show_all() {
 		try {
 			List<Player> l = this.playerDAO.index();
@@ -35,4 +32,5 @@ public class GameController {
 		p.addCharacter(CharacterDirector.buildWarrior());
 		playerDAO.save(p);
 	}
+	 */
 }

@@ -1,5 +1,6 @@
 package fr.ecole42.swingy.config;
 
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,13 @@ import java.util.Properties;
 @ComponentScan("fr.ecole42.swingy")
 @EnableTransactionManagement
 public class SpringConfig {
+
+	@Bean
+	public void dbInit() {
+		org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration();
+		config.configure();
+		SessionFactory sessionFactory = config.buildSessionFactory();
+	}
 	@Bean
 	public DataSource dataSource() {
 		org.hibernate.cfg.Configuration conf = new org.hibernate.cfg.Configuration().configure("hibernate.cfg.xml");

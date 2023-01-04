@@ -3,7 +3,6 @@ package fr.ecole42.swingy.view.gui;
 import fr.ecole42.swingy.model.Map;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Window {
 	private JFrame jFrame;
