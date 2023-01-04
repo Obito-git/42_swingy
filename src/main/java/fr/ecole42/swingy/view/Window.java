@@ -1,4 +1,4 @@
-package fr.ecole42.swingy.view.gui;
+package fr.ecole42.swingy.view;
 
 import fr.ecole42.swingy.model.Map;
 

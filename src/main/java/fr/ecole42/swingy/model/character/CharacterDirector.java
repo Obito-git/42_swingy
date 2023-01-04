@@ -1,9 +1,10 @@
 package fr.ecole42.swingy.model.character;
 
 public class CharacterDirector {
-	public static Character buildWarrior() {
+	public static Character buildWarrior(String name) {
 		return new CharacterBuilder().level(1)
-				.playerClass(PlayerClass.WARRIOR)
+				.name(name)
+				.playerClass(HeroClass.WARRIOR)
 				.experience(0)
 				.attack(25)
 				.defence(20)
@@ -11,9 +12,10 @@ public class CharacterDirector {
 				.build();
 	}
 
-	public static Character buildMage() {
+	public static Character buildMage(String name) {
 		return new CharacterBuilder().level(1)
-				.playerClass(PlayerClass.MAGE)
+				.name(name)
+				.playerClass(HeroClass.MAGE)
 				.experience(0)
 				.attack(50)
 				.defence(10)
@@ -21,9 +23,10 @@ public class CharacterDirector {
 				.build();
 	}
 
-	public static Character buildHunter() {
+	public static Character buildHunter(String name) {
 		return new CharacterBuilder().level(1)
-				.playerClass(PlayerClass.HUNTER)
+				.name(name)
+				.playerClass(HeroClass.HUNTER)
 				.experience(0)
 				.attack(40)
 				.defence(15)

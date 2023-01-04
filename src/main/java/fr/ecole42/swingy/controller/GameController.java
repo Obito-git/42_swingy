@@ -1,17 +1,24 @@
 package fr.ecole42.swingy.controller;
 
-import fr.ecole42.swingy.dao.PlayerDAO;
+import fr.ecole42.swingy.dao.CharacterDAO;
+import fr.ecole42.swingy.model.character.Character;
+import fr.ecole42.swingy.view.ViewModes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameController {
-	private final PlayerDAO playerDAO;
+	private final CharacterDAO characterDAO;
+	private ViewModes viewModes;
 
 	@Autowired
-	public GameController(PlayerDAO playerDAO) {
-		this.playerDAO = playerDAO;
+	public GameController(CharacterDAO characterDAO) {
+		this.characterDAO = characterDAO;
+		viewModes = ViewModes.CONSOLE;
+	}
 
+	public void setViewMode(ViewModes viewModes) {
+		this.viewModes = viewModes;
 	}
 
 	/*
@@ -33,4 +40,8 @@ public class GameController {
 		playerDAO.save(p);
 	}
 	 */
+
+	public void save(Character c) {
+		characterDAO.save(c);
+	}
 }

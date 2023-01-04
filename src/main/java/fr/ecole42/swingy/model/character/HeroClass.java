@@ -1,5 +1,5 @@
 package fr.ecole42.swingy.model.character;
 
-public enum PlayerClass {
+public enum HeroClass {
 	WARRIOR, MAGE, HUNTER
 }
