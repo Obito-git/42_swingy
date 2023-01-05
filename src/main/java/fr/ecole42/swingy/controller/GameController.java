@@ -1,24 +1,31 @@
 package fr.ecole42.swingy.controller;
 
+import fr.ecole42.swingy.config.SpringConfig;
 import fr.ecole42.swingy.dao.CharacterDAO;
 import fr.ecole42.swingy.model.hero.Hero;
-import fr.ecole42.swingy.view.ViewModes;
+import fr.ecole42.swingy.view.MainVisualizer;
+import fr.ecole42.swingy.view.ViewMode;
+import fr.ecole42.swingy.view.menu.CharacterMenu;
+import fr.ecole42.swingy.view.menu.CharacterMenuConsole;
+import fr.ecole42.swingy.view.menu.CharacterMenuGUI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameController {
 	private final CharacterDAO characterDAO;
-	private ViewModes viewModes;
+	private MainVisualizer mainVisualizer;
 
 	@Autowired
-	public GameController(CharacterDAO characterDAO) {
+	public GameController(CharacterDAO characterDAO, MainVisualizer mainVisualizer) {
 		this.characterDAO = characterDAO;
-		viewModes = ViewModes.CONSOLE;
+		this.mainVisualizer = mainVisualizer;
 	}
 
-	public void setViewMode(ViewModes viewModes) {
-		this.viewModes = viewModes;
+	public void changeViewMode(ViewMode viewMode) {
+		mainVisualizer.setViewMode(viewMode);
 	}
 
 	/*

@@ -22,7 +22,6 @@
                 </configuration>
             </plugin>
 
-            <!-- DOCKER POSTGRES -->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -42,7 +41,7 @@
                                     <port>5432:5432</port>
                                 </ports>
                                 <wait>
-                                    <time>10000</time>
+                                    <time>5000</time>
                                 </wait>
                             </run>
                         </image>
@@ -51,15 +50,12 @@
                 <executions>
                     <execution>
                         <id>start</id>
-                        <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>build</goal>
                             <goal>start</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>stop</id>
-                        <phase>post-integration-test</phase>
                         <goals>
                             <goal>stop</goal>
                         </goals>
@@ -122,6 +118,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- VALIDATOR -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
