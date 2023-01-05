@@ -29,7 +29,7 @@ public class App {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         MainVisualizer mainVisualizer = context.getBean(MainVisualizer.class);
-        mainVisualizer.setViewMode(ViewMode.GUI);
+        mainVisualizer.setViewMode(isConsole ? ViewMode.CONSOLE : ViewMode.GUI);
         mainVisualizer.start();
 
 

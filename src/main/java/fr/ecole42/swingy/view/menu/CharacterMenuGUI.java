@@ -1,17 +1,14 @@
 package fr.ecole42.swingy.view.menu;
 
-import fr.ecole42.swingy.config.SpringConfig;
 import fr.ecole42.swingy.controller.GameController;
-import fr.ecole42.swingy.view.MainVisualizer;
 import fr.ecole42.swingy.view.ViewMode;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import fr.ecole42.swingy.view.Visible;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CharacterMenuGUI implements CharacterMenu {
+public class CharacterMenuGUI implements CharacterMenu, Visible {
     JFrame frame = new JFrame("Test Frame");
     private GameController gameController;
 

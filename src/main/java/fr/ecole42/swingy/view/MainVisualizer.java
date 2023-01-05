@@ -1,7 +1,6 @@
 package fr.ecole42.swingy.view;
 
 import fr.ecole42.swingy.controller.GameController;
-import fr.ecole42.swingy.view.menu.CharacterMenu;
 import fr.ecole42.swingy.view.menu.CharacterMenuConsole;
 import fr.ecole42.swingy.view.menu.CharacterMenuGUI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class MainVisualizer {
     private Stage currentStage;
     private ViewMode viewMode;
     private GameController gameController;
-    CharacterMenu characterMenu;
+    Visible currentView;
 
     @Autowired
     public MainVisualizer(@Lazy GameController gameController) {
@@ -29,14 +28,24 @@ public class MainVisualizer {
     }
 
     public void setViewMode(ViewMode viewMode) {
-        if (characterMenu != null)
-            this.characterMenu.hide();
+        if (currentView != null)
+            this.currentView.hide();
         this.viewMode = viewMode;
-        this.characterMenu = viewMode == ViewMode.CONSOLE ? new CharacterMenuConsole(gameController) : new CharacterMenuGUI(gameController);
-        characterMenu.show();
+        updateCurrentView();
+        currentView.show();
     }
 
     public void start() {
-        this.characterMenu.show();
+        updateCurrentView();
+        this.currentView.show();
+    }
+
+    private void updateCurrentView() {
+        if (currentStage == Stage.MENU) {
+            if (viewMode == ViewMode.CONSOLE)
+                currentView = new CharacterMenuConsole(gameController);
+            else
+                currentView = new CharacterMenuGUI(gameController);
+        }
     }
 }

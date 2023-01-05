@@ -3,11 +3,12 @@ package fr.ecole42.swingy.view.menu;
 import fr.ecole42.swingy.controller.GameController;
 import fr.ecole42.swingy.view.Logger;
 import fr.ecole42.swingy.view.ViewMode;
+import fr.ecole42.swingy.view.Visible;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-public class CharacterMenuConsole implements CharacterMenu {
+public class CharacterMenuConsole implements CharacterMenu, Visible {
     private GameController gameController;
 
     public CharacterMenuConsole(GameController gameController) {
