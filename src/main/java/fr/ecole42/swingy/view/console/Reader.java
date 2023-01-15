@@ -1,7 +1,10 @@
 package fr.ecole42.swingy.view.console;
 
+import fr.ecole42.swingy.controller.Controller;
+import fr.ecole42.swingy.model.GameMap;
 import fr.ecole42.swingy.model.hero.Hero;
 import fr.ecole42.swingy.model.hero.HeroDirector;
+import fr.ecole42.swingy.view.ViewMode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +12,12 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class Reader {
+	private Controller controller;
+
+	public Reader(Controller controller) {
+		this.controller = controller;
+	}
+
 	private static String readLine() {
 		BufferedReader br = null;
 		String res = null;
@@ -28,28 +37,32 @@ public class Reader {
 		return res;
 	}
 
-	public static Hero chooseHero(List<Hero> heroes) {
+	public Hero chooseHero(List<Hero> heroes) {
 		Logger.print("Found " + heroes.size() + " heroes");
 		Logger.print("Choose existing hero or type \"create\" to create a new hero");
-			while (true) {
-				for (int i = 0; i < heroes.size(); i++)
-					Logger.print((i + 1) + ". " + heroes.get(i));
-				try {
-					String res = readLine();
-					if (res == null || res.equalsIgnoreCase("create"))
-						return null;
-					return heroes.get(Integer.parseInt(res) - 1);
-				} catch (Exception e) {
-					Logger.print("Choose existing hero or type \"create\" to create a new hero");
+		while (true) {
+			for (int i = 0; i < heroes.size(); i++)
+				Logger.print((i + 1) + ". " + heroes.get(i));
+			try {
+				String res = readLine();
+				if (res == null || res.equalsIgnoreCase("create"))
+					return null;
+				if (res.equalsIgnoreCase("gui")) {
+					controller.setView(ViewMode.GUI);
+					return null;
 				}
+				return heroes.get(Integer.parseInt(res) - 1);
+			} catch (Exception e) {
+				Logger.print("Choose existing hero or type \"create\" to create a new hero");
 			}
+		}
 	}
-	
+
 	private static String heroDescription(int hp, int def, int attack) {
 		return "Attack " + attack + ", defence " + def + ", hp " + hp;
 	}
 
-	public static Hero createHero() {
+	public Hero createHero() {
 		Logger.printDelimiter();
 		Logger.print("Hero creation:");
 		Logger.print("Let's name your character (min 2 character, max 30)");
@@ -72,6 +85,24 @@ public class Reader {
 				case "mage" -> {
 					return HeroDirector.buildMage(name);
 				}
+			}
+		}
+	}
+
+	public void moveDirection() {
+		while (true) {
+			System.out.println(controller.getPlayer().getCurrentGameMap());
+			Logger.printDelimiter();
+			Logger.print("Make your move:");
+			Logger.print("(N, E, S, W)");
+			String res = readLine();
+			if (res == null)
+				continue;
+			switch (res.toLowerCase()) {
+				case "n" -> controller.moveDirection(GameMap.directions.North);
+				case "w" -> controller.moveDirection(GameMap.directions.West);
+				case "e" -> controller.moveDirection(GameMap.directions.East);
+				case "s" -> controller.moveDirection(GameMap.directions.South);
 			}
 		}
 	}

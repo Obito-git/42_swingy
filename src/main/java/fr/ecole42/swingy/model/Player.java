@@ -2,6 +2,7 @@ package fr.ecole42.swingy.model;
 
 import fr.ecole42.swingy.model.hero.Hero;
 import fr.ecole42.swingy.view.MainUI;
+import fr.ecole42.swingy.view.ViewMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,11 @@ public class Player {
 
 	public void setCurrentHero(Hero currentHero) {
 		this.currentHero = currentHero;
+		mainUI.play();
+	}
+
+	public void setView(ViewMode view) {
+		mainUI.setViewMode(view);
 	}
 
 	public List<Hero> getAllHeroes() {

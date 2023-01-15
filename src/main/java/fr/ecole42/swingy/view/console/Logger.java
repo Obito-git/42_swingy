@@ -24,6 +24,7 @@ public class Logger {
             System.out.println("-------------------------");
     }
 
-
-
+    public static boolean isActive() {
+        return active;
+    }
 }

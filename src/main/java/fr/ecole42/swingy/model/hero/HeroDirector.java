@@ -14,7 +14,7 @@ public class HeroDirector {
 	public static final int HUNTER_HP = 100;
 
 	public static Hero buildWarrior(String name) {
-		return new HeroBuilder().level(7)
+		return new HeroBuilder().level(1)
 				.name(name)
 				.heroType(HeroType.WARRIOR)
 				.experience(0)

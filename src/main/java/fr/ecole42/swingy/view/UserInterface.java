@@ -8,6 +8,8 @@ abstract public class UserInterface {
 	public abstract void disableOutput();
 	public abstract void enableOutput();
 
+	public abstract void play();
+
 	public abstract void refresh();
 
 	public UserInterface(Controller controller) {

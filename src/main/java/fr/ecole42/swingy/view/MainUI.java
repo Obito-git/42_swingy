@@ -33,10 +33,18 @@ public class MainUI {
         getActiveUI().showHeroes();
     }
 
+    public void play() {
+        getActiveUI().play();
+    }
+
     public void setViewMode(ViewMode viewMode) {
         getActiveUI().disableOutput();
         this.viewMode = viewMode;
         getActiveUI().enableOutput();
+        if (controller.heroIsChosen())
+            play();
+        else
+            startGame();
     }
 
     public void refresh() {

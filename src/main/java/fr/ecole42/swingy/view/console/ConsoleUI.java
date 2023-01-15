@@ -7,6 +7,7 @@ import fr.ecole42.swingy.view.UserInterface;
 import java.util.List;
 
 public class ConsoleUI extends UserInterface {
+	Reader reader = new Reader(controller);
 	public ConsoleUI(Controller controller) {
 		super(controller);
 	}
@@ -14,7 +15,7 @@ public class ConsoleUI extends UserInterface {
 	@Override
 	public void showHeroes() {
 		List<Hero> heroes = controller.getAllHeroes();
-		while (!controller.heroIsChosen()) {
+		while (!controller.heroIsChosen() && Logger.isActive()) {
 			if (heroes.isEmpty()) {
 				Logger.print("No heroes created");
 				try {
@@ -24,15 +25,15 @@ public class ConsoleUI extends UserInterface {
 				}
 
 			} else {
-				Hero chosen = Reader.chooseHero(heroes);
-				if (chosen == null) {
+				Hero chosen = reader.chooseHero(heroes);
+				if (chosen == null && Logger.isActive()) {
 					try {
 						controller.save(createHero());
 					} catch (Exception e) {
 						System.out.println("Nickname is already used");
 						Logger.printDelimiter();
 					}
-				} else
+				} else if (chosen != null)
 					controller.setCurrentHero(chosen);
 			}
 		}
@@ -41,7 +42,7 @@ public class ConsoleUI extends UserInterface {
 	private Hero createHero() {
 		Hero hero;
 
-		while ((hero = Reader.createHero()) == null)
+		while ((hero = reader.createHero()) == null)
 			;
 		return hero;
 	}
@@ -55,6 +56,12 @@ public class ConsoleUI extends UserInterface {
 	public void enableOutput() {
 		Logger.setActive(true);
 		Logger.print("You can always switch to GUI typing \"GUI\" anywhere");
+	}
+
+	@Override
+	public void play() {
+		controller.getPlayer().getNewGameMap(); //FIXME
+		reader.moveDirection();
 	}
 
 	@Override

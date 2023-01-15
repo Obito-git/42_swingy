@@ -4,6 +4,7 @@ import fr.ecole42.swingy.dao.HeroDAO;
 import fr.ecole42.swingy.model.GameMap;
 import fr.ecole42.swingy.model.Player;
 import fr.ecole42.swingy.model.hero.Hero;
+import fr.ecole42.swingy.view.ViewMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,10 @@ public class Controller {
 		this.player = player;
 
 		this.player.setAllHeroes(this.heroDAO.index());
+	}
+
+	public void setView(ViewMode view) {
+		player.setView(view);
 	}
 
 	public void setCurrentHero(Hero hero) {

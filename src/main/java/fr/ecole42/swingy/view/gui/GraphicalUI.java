@@ -28,6 +28,11 @@ public class GraphicalUI extends UserInterface {
 	}
 
 	@Override
+	public void play() {
+		mainFrameGUI.buildMap();
+	}
+
+	@Override
 	public void refresh() {
 		mainFrameGUI.reload();
 	}

@@ -1,5 +1,8 @@
 package fr.ecole42.swingy.model.hero;
 
+import fr.ecole42.swingy.model.artifact.Armor;
+import fr.ecole42.swingy.model.artifact.Helm;
+import fr.ecole42.swingy.model.artifact.Weapon;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -35,6 +38,16 @@ public class Hero {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weapon_id")
+	private Weapon weapon;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "armor_id")
+	private Armor armor;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "helm_id")
+	private Helm helm;
+
 	public Hero(String name, HeroType heroType, int level, int experience, int attack, int defence, int hp) {
 		this.name = name;
 		this.level = level;
@@ -43,6 +56,10 @@ public class Hero {
 		this.defence = defence;
 		this.hp = hp;
 		this.heroType = heroType;
+
+		armor = new Armor(5);
+		weapon = new Weapon(5);
+		helm = new Helm(5);
 	}
 
 	public Hero() {
@@ -85,6 +102,30 @@ public class Hero {
 		return hp;
 	}
 
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public Armor getArmor() {
+		return armor;
+	}
+
+	public void setArmor(Armor armor) {
+		this.armor = armor;
+	}
+
+	public Helm getHelm() {
+		return helm;
+	}
+
+	public void setHelm(Helm helm) {
+		this.helm = helm;
+	}
+
 	@Override
 	public String toString() {
 		return "Hero{" +
@@ -95,6 +136,9 @@ public class Hero {
 				", attack=" + attack +
 				", defence=" + defence +
 				", hp=" + hp +
-				'}';
+				",\n" +
+				helm + "\n" +
+				armor + "\n" +
+				weapon + "\n";
 	}
 }

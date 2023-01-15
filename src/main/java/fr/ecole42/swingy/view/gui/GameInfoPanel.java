@@ -10,34 +10,33 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChooseHero extends JPanel implements ItemListener {
+public class GameInfoPanel extends JPanel implements ItemListener {
 	private final Controller controller;
 	private final JFrame frame;
 	private final JButton submit;
+	private final JButton changeUI;
+	HeroInfoPanel heroInfoPanel;
 	private JComboBox<String> heroesNamesBox;
 	private List<Hero> heroes;
 	private final List<String> heroesName = new ArrayList<>();
 
-	private JLabel heroLevel = new JLabel();
-	private JLabel heroExp = new JLabel();
-	private JLabel heroAttack = new JLabel();
-	private JLabel heroDefence = new JLabel();
-	private JLabel heroHp = new JLabel();
-	private JLabel heroType = new JLabel();
 
 
-	public ChooseHero(Controller controller, JFrame frame, JButton submit) {
+
+	public GameInfoPanel(Controller controller, JFrame frame, JButton submit, JButton changeUI) {
 		this.frame = frame;
 		this.controller = controller;
 		this.heroes = this.controller.getAllHeroes();
 		this.submit = submit;
+		this.changeUI = changeUI;
+		this.heroInfoPanel = new HeroInfoPanel();
 		setBackground(Color.GRAY);
 		setLayout(new GridLayout(10, 1));
 
-		build();
+		buildChooseHero();
 	}
 
-	private void build() {
+	private void buildChooseHero() {
 		removeAll();
 		heroes.clear();
 		heroes = this.controller.getAllHeroes();
@@ -51,7 +50,18 @@ public class ChooseHero extends JPanel implements ItemListener {
 		addCreateButton();
 		if (!heroes.isEmpty())
 			add(submit);
+		add(changeUI);
 
+		updateUI();
+	}
+
+	public void inGamePlayerInfo(Hero hero) {
+		removeAll();
+		heroInfoPanel = new HeroInfoPanel();
+		heroInfoPanel.updateInfo(hero);
+		add(heroInfoPanel);
+		add(changeUI);
+		setFocusable(false);
 		updateUI();
 	}
 
@@ -63,7 +73,7 @@ public class ChooseHero extends JPanel implements ItemListener {
 	}
 
 	private JDialog createDialog() {
-		final JDialog modelDialog = new JDialog(frame, "Swing Tester",
+		final JDialog modelDialog = new JDialog(frame, "Create Hero",
 				Dialog.ModalityType.DOCUMENT_MODAL);
 		modelDialog.setBounds(132, 132, 300, 200);
 		Container dialogContainer = modelDialog.getContentPane();
@@ -93,9 +103,10 @@ public class ChooseHero extends JPanel implements ItemListener {
 			try {
 				controller.save(created);
 				modelDialog.setVisible(false);
-				build();
+				buildChooseHero();
 			} catch (Exception exception) {
 				errorLabel.setText("Name is already used");
+				exception.printStackTrace();
 			}
 		});
 
@@ -118,36 +129,16 @@ public class ChooseHero extends JPanel implements ItemListener {
 
 	private void addHeroesDescriptionPanel() {
 		if (!heroes.isEmpty()) {
-			heroLevel = new JLabel("Level: " + heroes.get(heroesNamesBox.getSelectedIndex()).getLevel());
-			heroExp = new JLabel("Experience: " + heroes.get(heroesNamesBox.getSelectedIndex()).getExperience());
-			heroAttack = new JLabel("Attack: " + heroes.get(heroesNamesBox.getSelectedIndex()).getAttack());
-			heroDefence = new JLabel("Defence: " + heroes.get(heroesNamesBox.getSelectedIndex()).getDefence());
-			heroHp = new JLabel("Hp: " + heroes.get(heroesNamesBox.getSelectedIndex()).getHp());
-			heroType = new JLabel("Class: " + heroes.get(heroesNamesBox.getSelectedIndex()).getHeroType().toString());
-
-			JPanel heroesDescriptionPanel = new JPanel();
-			heroesDescriptionPanel.setSize(new Dimension(400, 400));
-			heroesDescriptionPanel.setLayout(new GridLayout(3, 2));
-			heroesDescriptionPanel.add(heroLevel);
-			heroesDescriptionPanel.add(heroExp);
-			heroesDescriptionPanel.add(heroAttack);
-			heroesDescriptionPanel.add(heroDefence);
-			heroesDescriptionPanel.add(heroHp);
-			heroesDescriptionPanel.add(heroType);
+			heroInfoPanel.updateInfo(heroes.get(heroesNamesBox.getSelectedIndex()));
 
 			heroesNamesBox.addItemListener(this);
-			add(heroesDescriptionPanel);
+			add(heroInfoPanel);
 		}
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		heroLevel.setText("Level: " + heroes.get(heroesNamesBox.getSelectedIndex()).getLevel());
-		heroExp.setText("Experience: " + heroes.get(heroesNamesBox.getSelectedIndex()).getExperience());
-		heroAttack.setText("Attack: " + heroes.get(heroesNamesBox.getSelectedIndex()).getAttack());
-		heroDefence.setText("Defence: " + heroes.get(heroesNamesBox.getSelectedIndex()).getDefence());
-		heroHp.setText("Hp: " + heroes.get(heroesNamesBox.getSelectedIndex()).getHp());
-		heroType.setText("Class: " + heroes.get(heroesNamesBox.getSelectedIndex()).getHeroType().toString());
+		heroInfoPanel.updateInfo(heroes.get(heroesNamesBox.getSelectedIndex()));
 	}
 
 	public Hero getChosenHero() {
