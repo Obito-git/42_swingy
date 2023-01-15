@@ -1,9 +1,11 @@
 package fr.ecole42.swingy.model.hero;
 
-import fr.ecole42.swingy.model.hero.types.HeroType;
-import fr.ecole42.swingy.model.hero.types.Hunter;
-import fr.ecole42.swingy.model.hero.types.Mage;
-import fr.ecole42.swingy.model.hero.types.Warrior;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
+import java.util.Set;
 
 public class HeroBuilder {
 	private int level;
@@ -50,13 +52,22 @@ public class HeroBuilder {
 	}
 
 	public Hero build() {
-		switch (heroType) {
-			case WARRIOR -> { return new Warrior(name, level, experience, attack, defence, hp); }
-			case HUNTER -> { return new Hunter(name, level, experience, attack, defence, hp); }
-			case MAGE -> { return new Mage(name, level, experience, attack, defence, hp); }
-			default -> {
-				return null;//FIXME
+		Hero hero = new Hero(name, heroType, level, experience, attack, defence, hp);
+
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+
+		Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(hero);
+
+		factory.close();
+		//Show errors
+		if (constraintViolations.size() > 0) {
+			for (ConstraintViolation<Hero> violation : constraintViolations) {
+				System.out.println(violation.getMessage());
 			}
+			return null;
+		} else {
+			return hero;
 		}
 	}
 

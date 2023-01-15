@@ -1,6 +1,5 @@
 package fr.ecole42.swingy.model.hero;
 
-import fr.ecole42.swingy.model.hero.types.HeroType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -8,11 +7,10 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "character")
-abstract public class Hero {
+@Table(name = "character")
+public class Hero {
 	@Column (name = "name", unique = true)
-	@Size(min = 2, max = 30)
+	@Size(min = 2, max = 10, message = "Heroes name length must be between 2 and 10 characters")
 	private String name;
 	@Column (name = "level")
 	@Min(1)
@@ -51,14 +49,48 @@ abstract public class Hero {
 
 	}
 
-	public abstract void attack();
-	public abstract void getDamage();
+	public void attack() {
+
+	}
+
+	public void getDamage() {
+
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public HeroType getHeroType() {
+		return heroType;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public int getDefence() {
+		return defence;
+	}
+
+	public int getHp() {
+		return hp;
+	}
 
 	@Override
 	public String toString() {
-		return "Character{" +
-				"name=" + name +
-				"level=" + level +
+		return "Hero{" +
+				"name='" + name + '\'' +
+				", level=" + level +
+				", heroType=" + heroType +
 				", experience=" + experience +
 				", attack=" + attack +
 				", defence=" + defence +

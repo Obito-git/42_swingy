@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class CharacterDAO {
+public class HeroDAO {
 	private final SessionFactory sessionFactory;
 
 	@Autowired
-	public CharacterDAO(SessionFactory sessionFactory) {
+	public HeroDAO(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
@@ -30,9 +30,9 @@ public class CharacterDAO {
 		return session.get(Hero.class, id);
 	}
 
-	@Transactional(readOnly = false)
-	public void save(Hero player) {
+	@Transactional()
+	public void save(Hero hero) {
 		Session session = sessionFactory.getCurrentSession();
-		session.save(player);
+		session.persist(hero);
 	}
 }

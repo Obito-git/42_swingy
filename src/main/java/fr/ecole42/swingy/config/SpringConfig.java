@@ -17,12 +17,12 @@ import java.util.Properties;
 @ComponentScan("fr.ecole42.swingy")
 @EnableTransactionManagement
 public class SpringConfig {
-
-	@Bean
+	@Bean("dbInitBean")
 	public void dbInit() {
 		org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration();
 		config.configure();
 		SessionFactory sessionFactory = config.buildSessionFactory();
+		sessionFactory.close(); //FIXME PROBABLY PROBLEM
 	}
 	@Bean
 	public DataSource dataSource() {

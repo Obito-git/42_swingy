@@ -1,16 +1,26 @@
 package fr.ecole42.swingy.model.hero;
 
-import fr.ecole42.swingy.model.hero.types.HeroType;
-
 public class HeroDirector {
+	public static final int WARRIOR_ATTACK = 25;
+	public static final int WARRIOR_DEFENCE = 25;
+	public static final int WARRIOR_HP = 125;
+
+	public static final int MAGE_ATTACK = 50;
+	public static final int MAGE_DEFENCE = 10;
+	public static final int MAGE_HP = 80;
+
+	public static final int HUNTER_ATTACK = 40;
+	public static final int HUNTER_DEFENCE = 15;
+	public static final int HUNTER_HP = 100;
+
 	public static Hero buildWarrior(String name) {
-		return new HeroBuilder().level(1)
+		return new HeroBuilder().level(7)
 				.name(name)
 				.heroType(HeroType.WARRIOR)
 				.experience(0)
-				.attack(25)
-				.defence(20)
-				.hp(120)
+				.attack(WARRIOR_ATTACK)
+				.defence(WARRIOR_DEFENCE)
+				.hp(WARRIOR_HP)
 				.build();
 	}
 
@@ -19,9 +29,9 @@ public class HeroDirector {
 				.name(name)
 				.heroType(HeroType.MAGE)
 				.experience(0)
-				.attack(50)
-				.defence(10)
-				.hp(80)
+				.attack(MAGE_ATTACK)
+				.defence(MAGE_DEFENCE)
+				.hp(MAGE_HP)
 				.build();
 	}
 
@@ -30,9 +40,9 @@ public class HeroDirector {
 				.name(name)
 				.heroType(HeroType.HUNTER)
 				.experience(0)
-				.attack(40)
-				.defence(15)
-				.hp(100)
+				.attack(HUNTER_ATTACK)
+				.defence(HUNTER_DEFENCE)
+				.hp(HUNTER_HP)
 				.build();
 	}
 }
