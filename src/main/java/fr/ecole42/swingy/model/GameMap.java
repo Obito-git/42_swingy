@@ -1,6 +1,8 @@
 package fr.ecole42.swingy.model;
 
+import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.model.hero.Hero;
+import fr.ecole42.swingy.view.MainUI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,43 +16,30 @@ public class GameMap {
 
 	private final int size;
 	private Hero hero;
+	private MainUI mainUI;
 	private int currentX;
 	private int currentY;
 	private char[][] map;
 	public static final char FIELD_EMPTY = '0';
 	public static final char FIELD_PLAYER = 'P';
-	public static final char FIELD_ARTIFACT = 'A';
 	public static final char FIELD_ENEMY_GHOST = 'H';
 	public static final char FIELD_ENEMY_GOLEM = 'G';
 	public static final char FIELD_ENEMY_KOBOLD = 'K';
 
-	public GameMap(Hero hero) {
+	public GameMap(Hero hero, MainUI mainUI) {
 		this.hero = hero;
+		this.mainUI = mainUI;
 		size = (hero.getLevel() - 1) * 5 + 10 - (hero.getLevel() % 2);
 		map = new char[size][size];
 		for (int i = 0; i < size; i++)
 			Arrays.fill(map[i], FIELD_EMPTY);
 		currentX = currentY = size / 2;
 		map[currentY][currentX] = FIELD_PLAYER;
-		putArtifacts();
 		putEnemies();
 	}
 
-	public void putArtifacts() {
-		int artifactCount = hero.getLevel() * 5;
-		while (artifactCount > 0) {
-			int randX = new Random().nextInt(size);
-			int randY = new Random().nextInt(size);
-			if (map[randX][randY] == FIELD_EMPTY)
-				map[randX][randY] = FIELD_ARTIFACT;
-			else
-				continue;
-			artifactCount--;
-		}
-	}
-
 	public void putEnemies() {
-		int enemyCount = hero.getLevel() * 15;
+		int enemyCount = (int)((size * size) / 1.5);
 		while (enemyCount > 0) {
 			int randX = new Random().nextInt(size);
 			int randY = new Random().nextInt(size);
@@ -71,8 +60,12 @@ public class GameMap {
 		switch (direction) {
 			case East -> {
 				if (currentX + 1 < size) {
-					map[currentY][currentX] = FIELD_EMPTY;
-					map[currentY][++currentX] = FIELD_PLAYER;
+					if (isEnemyField(map[currentY][currentX + 1])) {
+						mainUI.startFight(getEnemyType(map[currentY][currentX + 1]));
+					} else {
+						map[currentY][currentX] = FIELD_EMPTY;
+						map[currentY][++currentX] = FIELD_PLAYER;
+					}
 				}
 			}
 			case West -> {
@@ -92,6 +85,24 @@ public class GameMap {
 					map[currentY][currentX] = FIELD_EMPTY;
 					map[++currentY][currentX] = FIELD_PLAYER;
 				}
+			}
+		}
+	}
+
+	private boolean isEnemyField(char c) {
+		return c == FIELD_ENEMY_GHOST || c == FIELD_ENEMY_GOLEM || c == FIELD_ENEMY_KOBOLD;
+	}
+
+	private EnemyType getEnemyType(char c) {
+		switch (c) {
+			case FIELD_ENEMY_GHOST -> {
+				return EnemyType.GHOST;
+			}
+			case FIELD_ENEMY_GOLEM -> {
+				return EnemyType.GOLEM;
+			}
+			default -> {
+				return EnemyType.KOBOLD;
 			}
 		}
 	}

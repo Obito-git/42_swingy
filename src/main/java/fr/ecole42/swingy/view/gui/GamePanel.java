@@ -13,7 +13,6 @@ public class GamePanel extends JPanel {
 	private final Player player;
 	private final Controller controller;
 	private ImageIcon heroIcon;
-	private ImageIcon artifactIcon;
 	private ImageIcon ghostIcon;
 	private ImageIcon golemIcon;
 	private ImageIcon koboldIcon;
@@ -21,7 +20,6 @@ public class GamePanel extends JPanel {
 	private static final String MAGE_ICON = "/icons/mage-icon.png";
 	private static final String HUNTER_ICON = "/icons/hunter-icon.png";
 	private static final String WARRIOR_ICON = "/icons/warrior-icon.png";
-	private static final String ARTIFACT_ICON = "/icons/artifact-icon.png";
 	private static final String GHOST_ICON = "/icons/ghost-icon.png";
 	private static final String GOLEM_ICON = "/icons/golem-icon.png";
 	private static final String KOBOLD_ICON = "/icons/kobold-icon.png";
@@ -46,8 +44,6 @@ public class GamePanel extends JPanel {
 		}
 		try {
 			heroIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource(iconPath))
-					.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH));
-			artifactIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource(ARTIFACT_ICON))
 					.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH));
 			koboldIcon = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource(KOBOLD_ICON))
 					.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH));
@@ -75,8 +71,6 @@ public class GamePanel extends JPanel {
 				if (map[i][j] == GameMap.FIELD_EMPTY) {
 					jPanel.setBackground(Color.GRAY);
 					jPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-				} else if (map[i][j] == GameMap.FIELD_ARTIFACT){
-					jLabel.setIcon(artifactIcon);
 				} else if (map[i][j] == GameMap.FIELD_ENEMY_KOBOLD){
 					jLabel.setIcon(koboldIcon);
 				} else if (map[i][j] == GameMap.FIELD_ENEMY_GOLEM){

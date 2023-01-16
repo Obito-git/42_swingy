@@ -1,6 +1,7 @@
 package fr.ecole42.swingy.view.console;
 
 import fr.ecole42.swingy.controller.Controller;
+import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.model.hero.Hero;
 import fr.ecole42.swingy.view.UserInterface;
 
@@ -66,6 +67,12 @@ public class ConsoleUI extends UserInterface {
 
 	@Override
 	public void refresh() {
+		//FIXME
+	}
 
+	@Override
+	public boolean startFight(EnemyType enemyType) {
+		//FIXME
+		return false;
 	}
 }

@@ -31,4 +31,8 @@ public class Enemy {
 	public int getHeroLvl() {
 		return heroLvl;
 	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
 }

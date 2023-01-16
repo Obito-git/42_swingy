@@ -1,6 +1,7 @@
 package fr.ecole42.swingy.view;
 
 import fr.ecole42.swingy.controller.Controller;
+import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.view.console.ConsoleUI;
 import fr.ecole42.swingy.view.gui.GraphicalUI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,12 @@ public class MainUI {
         return graphicalUI;
     }
 
+    public boolean startFight(EnemyType enemyType) {
+        return getActiveUI().startFight(enemyType);
+    }
+
     public void startGame() {
+        //controller.resetCurrentHero();
         getActiveUI().showHeroes();
     }
 

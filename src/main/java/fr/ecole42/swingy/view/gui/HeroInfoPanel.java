@@ -10,6 +10,7 @@ public class HeroInfoPanel extends JPanel {
 	private final JLabel heroExp = new JLabel();
 	private final JLabel heroAttack = new JLabel();
 	private final JLabel heroDefence = new JLabel();
+	private final JLabel heroMaxHp = new JLabel();
 	private final JLabel heroHp = new JLabel();
 	private final JLabel heroType = new JLabel();
 	private final JLabel armor = new JLabel();
@@ -18,12 +19,13 @@ public class HeroInfoPanel extends JPanel {
 
 	public HeroInfoPanel() {
 		setSize(new Dimension(400, 400));
-		setLayout(new GridLayout(3, 2));
+		setLayout(new GridLayout(4, 2));
 
 		add(heroLevel);
 		add(heroExp);
 		add(heroAttack);
 		add(heroDefence);
+		add(heroMaxHp);
 		add(heroHp);
 		add(heroType);
 		add(weapon);
@@ -36,6 +38,7 @@ public class HeroInfoPanel extends JPanel {
 		heroExp.setText("Experience: " + hero.getExperience());
 		heroAttack.setText("Attack: " + hero.getAttack());
 		heroDefence.setText("Defence: " + hero.getDefence());
+		heroMaxHp.setText("Max Hp: " + hero.getMaxHp());
 		heroHp.setText("Hp: " + hero.getHp());
 		heroType.setText("Class: " + hero.getHeroType().toString());
 		weapon.setText(hero.getWeapon().toString());

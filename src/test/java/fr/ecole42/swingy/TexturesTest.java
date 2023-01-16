@@ -15,18 +15,11 @@ public class TexturesTest {
 	private static final String KOBOLD_ICON = "/icons/kobold-icon.png";
 
 
-	private static final String ARTIFACT_ICON = "/icons/artifact-icon.png";
-
 	@Test
 	public void texturesHeroesTest() {
 		assertNotNull("Mage icon is not found", getClass().getResource(MAGE_ICON));
 		assertNotNull("Hunter icon is not found", getClass().getResource(HUNTER_ICON));
 		assertNotNull("Warrior icon is not found", getClass().getResource(WARRIOR_ICON));
-	}
-
-	@Test
-	public void texturesItemsTest() {
-		assertNotNull("Helm icon is not found", getClass().getResource(ARTIFACT_ICON));
 	}
 
 	@Test

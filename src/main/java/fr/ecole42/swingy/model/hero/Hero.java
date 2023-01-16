@@ -3,6 +3,7 @@ package fr.ecole42.swingy.model.hero;
 import fr.ecole42.swingy.model.artifact.Armor;
 import fr.ecole42.swingy.model.artifact.Helm;
 import fr.ecole42.swingy.model.artifact.Weapon;
+import fr.ecole42.swingy.model.enemies.Enemy;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -31,7 +32,11 @@ public class Hero {
 	@Column (name = "defence")
 	@Min(0)
 	private int defence;
-	@Column (name = "hp")
+	@Column (name = "maxHp")
+	@Min(0)
+	private int maxHp;
+
+	@Column (name = "max")
 	@Min(0)
 	private int hp;
 	@Id
@@ -48,14 +53,15 @@ public class Hero {
 	@JoinColumn(name = "helm_id")
 	private Helm helm;
 
-	public Hero(String name, HeroType heroType, int level, int experience, int attack, int defence, int hp) {
+	public Hero(String name, HeroType heroType, int level, int experience, int attack, int defence, int maxHp) {
 		this.name = name;
 		this.level = level;
 		this.experience = experience;
 		this.attack = attack;
 		this.defence = defence;
-		this.hp = hp;
+		this.maxHp = maxHp;
 		this.heroType = heroType;
+		this.hp = maxHp;
 
 		armor = new Armor(5);
 		weapon = new Weapon(5);
@@ -66,12 +72,16 @@ public class Hero {
 
 	}
 
-	public void attack() {
-
-	}
-
-	public void getDamage() {
-
+	public boolean fight(Enemy enemy) {
+		while (maxHp > 0 && enemy.getHp() > 0) {
+			int heroDmg = enemy.getDefence() >= attack ? 1 : attack - enemy.getDefence();
+			int enemyDmg = defence >= enemy.getAttack() ? 1 : enemy.getAttack() - defence;
+			enemy.setHp(enemy.getHp() - heroDmg);
+			hp -= enemyDmg;
+			if (hp < 0)
+				hp = 0;
+		}
+		return hp > 0;
 	}
 
 	public String getName() {
@@ -98,8 +108,8 @@ public class Hero {
 		return defence;
 	}
 
-	public int getHp() {
-		return hp;
+	public int getMaxHp() {
+		return maxHp;
 	}
 
 	public Weapon getWeapon() {
@@ -126,6 +136,20 @@ public class Hero {
 		this.helm = helm;
 	}
 
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public void increaseExp(int exp) {
+		experience += exp;
+		if (experience > (int)(level*1000 + (Math.pow(level - 1, 2) *450)))
+			level++;
+	}
+
 	@Override
 	public String toString() {
 		return "Hero{" +
@@ -135,6 +159,7 @@ public class Hero {
 				", experience=" + experience +
 				", attack=" + attack +
 				", defence=" + defence +
+				", max hp=" + maxHp +
 				", hp=" + hp +
 				",\n" +
 				helm + "\n" +

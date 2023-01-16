@@ -1,10 +1,13 @@
 package fr.ecole42.swingy.view.gui;
 
 import fr.ecole42.swingy.controller.Controller;
+import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.view.ViewMode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainFrameGUI extends JFrame {
 	private final Controller controller;
@@ -58,6 +61,36 @@ public class MainFrameGUI extends JFrame {
 		gamePanel.requestFocusInWindow();
 		SwingUtilities.updateComponentTreeUI(this);
 		gamePanel.build(controller.getPlayer().getNewGameMap());
+	}
 
+	public boolean startFightWindow(EnemyType enemyType) {
+		AtomicBoolean fightRes = new AtomicBoolean(false);
+		JDialog acceptOrRun = new JDialog(this, "Wanna fight?", true);
+		JDialog fightResult = new JDialog(this, "Result", true);
+		fightResult.setSize(300, 300);
+		JButton accept = new JButton("Accept");
+		accept.addActionListener(e -> {
+			fightRes.set(controller.fightSimulation(enemyType));
+			acceptOrRun.setVisible(false);
+			fightResult.add(new JLabel(fightRes.get() ? "You won" : "You lost"));
+			fightResult.setVisible(true);
+		});
+		JButton run = new JButton("Run");
+		run.addActionListener(e -> {
+			if (new Random().nextBoolean()) {
+				fightRes.set(controller.fightSimulation(enemyType));
+				acceptOrRun.setVisible(false);
+				fightResult.add(new JLabel("You can't run... and " + (fightRes.get() ? "You won" : "You lost")));
+			} else
+				fightResult.add(new JLabel("You ran away"));
+			acceptOrRun.setVisible(false);
+			fightResult.setVisible(true);
+		});
+		acceptOrRun.setSize(300, 300);
+		acceptOrRun.setLayout(new GridLayout(1, 2));
+		acceptOrRun.add(accept);
+		acceptOrRun.add(run);
+		acceptOrRun.setVisible(true);
+		return fightRes.get();
 	}
 }

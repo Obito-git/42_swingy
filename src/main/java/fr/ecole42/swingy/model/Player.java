@@ -43,8 +43,13 @@ public class Player {
 	}
 
 	public GameMap getNewGameMap() {
-		currentGameMap = new GameMap(currentHero);
+		currentGameMap = new GameMap(currentHero, mainUI);
 		return currentGameMap;
+	}
+
+	public void increaseExp(int exp) {
+		getCurrentHero().increaseExp(exp);
+		mainUI.refresh();
 	}
 
 	public GameMap getCurrentGameMap() {

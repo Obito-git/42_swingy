@@ -1,6 +1,7 @@
 package fr.ecole42.swingy.view.gui;
 
 import fr.ecole42.swingy.controller.Controller;
+import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.view.UserInterface;
 
 
@@ -35,5 +36,10 @@ public class GraphicalUI extends UserInterface {
 	@Override
 	public void refresh() {
 		mainFrameGUI.reload();
+	}
+
+	@Override
+	public boolean startFight(EnemyType enemyType) {
+		return mainFrameGUI.startFightWindow(enemyType);
 	}
 }
