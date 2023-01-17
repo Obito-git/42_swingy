@@ -4,9 +4,7 @@ import fr.ecole42.swingy.model.enemies.EnemyType;
 import fr.ecole42.swingy.model.hero.Hero;
 import fr.ecole42.swingy.view.MainUI;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class GameMap {
@@ -60,31 +58,43 @@ public class GameMap {
 		switch (direction) {
 			case East -> {
 				if (currentX + 1 < size) {
-					if (isEnemyField(map[currentY][currentX + 1])) {
-						mainUI.startFight(getEnemyType(map[currentY][currentX + 1]));
-					} else {
-						map[currentY][currentX] = FIELD_EMPTY;
-						map[currentY][++currentX] = FIELD_PLAYER;
-					}
-				}
+					if (isEnemyField(map[currentY][currentX + 1]))
+						if (!mainUI.startFight(getEnemyType(map[currentY][currentX + 1])))
+							return;
+					map[currentY][currentX] = FIELD_EMPTY;
+					map[currentY][++currentX] = FIELD_PLAYER;
+				} else
+					mainUI.restartGame();
 			}
 			case West -> {
 				if (currentX - 1 >= 0) {
+					if (isEnemyField(map[currentY][currentX - 1]))
+						if (!mainUI.startFight(getEnemyType(map[currentY][currentX + 1])))
+							return;
 					map[currentY][currentX] = FIELD_EMPTY;
 					map[currentY][--currentX] = FIELD_PLAYER;
-				}
+				} else
+					mainUI.restartGame();
 			}
 			case North -> {
 				if (currentY - 1 >= 0) {
+					if (isEnemyField(map[currentY - 1][currentX]))
+						if (!mainUI.startFight(getEnemyType(map[currentY][currentX + 1])))
+							return;
 					map[currentY][currentX] = FIELD_EMPTY;
 					map[--currentY][currentX] = FIELD_PLAYER;
-				}
+				} else
+					mainUI.restartGame();
 			}
 			default -> {
 				if (currentY + 1 < size) {
+					if (isEnemyField(map[currentY + 1][currentX]))
+						if (!mainUI.startFight(getEnemyType(map[currentY][currentX + 1])))
+							return;
 					map[currentY][currentX] = FIELD_EMPTY;
 					map[++currentY][currentX] = FIELD_PLAYER;
-				}
+				} else
+					mainUI.restartGame();
 			}
 		}
 	}

@@ -5,11 +5,13 @@ public class Enemy {
 	private int attack;
 	private int defence;
 	private int heroLvl;
+	private int maxHp;
 
 	private EnemyType enemyType;
 
 	public Enemy(int hp, int attack, int defence, EnemyType enemyType, int heroLvl) {
 		this.hp = hp * heroLvl;
+		this.maxHp = hp;
 		this.attack = attack * heroLvl;
 		this.defence = defence * heroLvl;
 		this.heroLvl = heroLvl;
@@ -30,6 +32,14 @@ public class Enemy {
 
 	public int getHeroLvl() {
 		return heroLvl;
+	}
+
+	public EnemyType getEnemyType() {
+		return enemyType;
+	}
+
+	public int getMaxHp() {
+		return maxHp;
 	}
 
 	public void setHp(int hp) {

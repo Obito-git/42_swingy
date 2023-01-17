@@ -14,6 +14,8 @@ abstract public class UserInterface {
 
 	public abstract void refresh();
 
+	public abstract void restart();
+
 	public abstract boolean startFight(EnemyType enemyType);
 
 

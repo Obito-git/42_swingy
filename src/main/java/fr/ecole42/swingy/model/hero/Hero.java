@@ -72,13 +72,31 @@ public class Hero {
 
 	}
 
+	public Hero(Hero other) {
+		this.name = other.name;
+		this.level = other.level;
+		this.experience = other.experience;
+		this.attack = other.attack;
+		this.defence = other.defence;
+		this.maxHp = other.maxHp;
+		this.heroType = other.heroType;
+		this.hp = other.hp;
+
+		this.armor = new Armor(other.getArmor().getStat());
+		this.weapon = new Weapon(other.getWeapon().getStat());
+		this.helm = new Helm(other.getHelm().getStat());
+	}
+
 	public boolean fight(Enemy enemy) {
-		while (maxHp > 0 && enemy.getHp() > 0) {
-			int heroDmg = enemy.getDefence() >= attack ? 1 : attack - enemy.getDefence();
-			int enemyDmg = defence >= enemy.getAttack() ? 1 : enemy.getAttack() - defence;
+		int sumAttack = attack + weapon.getStat();
+		int sumDefence = defence + armor.getStat();
+		int sumHp = hp + helm.getStat();
+		while (sumHp > 0 && enemy.getHp() > 0) {
+			int heroDmg = enemy.getDefence() >= sumAttack ? 1 : sumAttack - enemy.getDefence();
+			int enemyDmg = sumDefence >= enemy.getAttack() ? 1 : enemy.getAttack() - sumDefence;
 			enemy.setHp(enemy.getHp() - heroDmg);
-			hp -= enemyDmg;
-			if (hp < 0)
+			sumHp -= enemyDmg;
+			if (sumHp < 0)
 				hp = 0;
 		}
 		return hp > 0;
@@ -146,14 +164,15 @@ public class Hero {
 
 	public void increaseExp(int exp) {
 		experience += exp;
-		if (experience > (int)(level*1000 + (Math.pow(level - 1, 2) *450)))
+		if (experience > (int)(level*1000 + (Math.pow(level - 1, 2) *450))) {
 			level++;
+			hp = maxHp;
+		}
 	}
 
 	@Override
 	public String toString() {
-		return "Hero{" +
-				"name='" + name + '\'' +
+		return "Name='" + name + '\'' +
 				", level=" + level +
 				", heroType=" + heroType +
 				", experience=" + experience +
@@ -161,9 +180,6 @@ public class Hero {
 				", defence=" + defence +
 				", max hp=" + maxHp +
 				", hp=" + hp +
-				",\n" +
-				helm + "\n" +
-				armor + "\n" +
-				weapon + "\n";
+				",\n\t" + helm + ", " + armor + ", " + weapon ;
 	}
 }

@@ -35,4 +35,10 @@ public class HeroDAO {
 		Session session = sessionFactory.getCurrentSession();
 		session.persist(hero);
 	}
+
+	@Transactional()
+	public void update(Hero hero) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(hero);
+	}
 }

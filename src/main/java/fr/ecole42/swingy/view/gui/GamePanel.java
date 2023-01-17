@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel {
-	private final Player player;
 	private final Controller controller;
 	private ImageIcon heroIcon;
 	private ImageIcon ghostIcon;
@@ -27,7 +26,6 @@ public class GamePanel extends JPanel {
 
 	public GamePanel(Controller controller) {
 		this.controller = controller;
-		this.player = this.controller.getPlayer();
 		addKeyListener(new CustomKeyListener());
 		setFocusable(true);
 
@@ -37,7 +35,7 @@ public class GamePanel extends JPanel {
 	private void setIcon(int mapSize) {
 		String iconPath;
 		int iconSize = (int) (MainFrameGUI.GAME_PANEL_WIDTH / mapSize * 0.9);
-		switch (player.getCurrentHero().getHeroType()) {
+		switch (controller.getHeroCopy().getHeroType()) {
 			case MAGE -> iconPath = MAGE_ICON;
 			case HUNTER -> iconPath = HUNTER_ICON;
 			default -> iconPath = WARRIOR_ICON;

@@ -20,7 +20,8 @@ public class ConsoleUI extends UserInterface {
 			if (heroes.isEmpty()) {
 				Logger.print("No heroes created");
 				try {
-					controller.save(createHero());
+					controller.saveNewHero(createHero());
+					heroes = controller.getAllHeroes();
 				} catch (Exception e) {
 					System.out.println("Nickname is already used");
 				}
@@ -29,7 +30,8 @@ public class ConsoleUI extends UserInterface {
 				Hero chosen = reader.chooseHero(heroes);
 				if (chosen == null && Logger.isActive()) {
 					try {
-						controller.save(createHero());
+						controller.saveNewHero(createHero());
+						heroes = controller.getAllHeroes();
 					} catch (Exception e) {
 						System.out.println("Nickname is already used");
 						Logger.printDelimiter();
@@ -61,18 +63,23 @@ public class ConsoleUI extends UserInterface {
 
 	@Override
 	public void play() {
-		controller.getPlayer().getNewGameMap(); //FIXME
+		controller.getNewGameMap();
 		reader.moveDirection();
 	}
 
 	@Override
 	public void refresh() {
+		showHeroes();
 		//FIXME
 	}
 
 	@Override
+	public void restart() {
+		showHeroes();
+	}
+
+	@Override
 	public boolean startFight(EnemyType enemyType) {
-		//FIXME
-		return false;
+		return reader.consoleFight(enemyType);
 	}
 }

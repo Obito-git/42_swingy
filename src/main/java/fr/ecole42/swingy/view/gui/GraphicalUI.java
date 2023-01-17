@@ -6,7 +6,7 @@ import fr.ecole42.swingy.view.UserInterface;
 
 
 public class GraphicalUI extends UserInterface {
-	private final MainFrameGUI mainFrameGUI;
+	private MainFrameGUI mainFrameGUI;
 
 	public GraphicalUI(Controller controller) {
 		super(controller);
@@ -36,6 +36,13 @@ public class GraphicalUI extends UserInterface {
 	@Override
 	public void refresh() {
 		mainFrameGUI.reload();
+	}
+
+	@Override
+	public void restart() {
+		mainFrameGUI.removeAll();
+		mainFrameGUI.dispose();
+		mainFrameGUI = new MainFrameGUI(controller);
 	}
 
 	@Override

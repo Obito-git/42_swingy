@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 public class MainUI {
     private ViewMode viewMode;
     private Controller controller;
-    private final ConsoleUI consoleUI;
-    private final GraphicalUI graphicalUI;
+    private ConsoleUI consoleUI;
+    private GraphicalUI graphicalUI;
 
 
     @Autowired
@@ -35,7 +35,13 @@ public class MainUI {
     }
 
     public void startGame() {
-        //controller.resetCurrentHero();
+        getActiveUI().showHeroes();
+    }
+
+    public void restartGame() {
+        controller.saveProgress();
+        controller.resetChosenHero();
+        getActiveUI().restart();
         getActiveUI().showHeroes();
     }
 
