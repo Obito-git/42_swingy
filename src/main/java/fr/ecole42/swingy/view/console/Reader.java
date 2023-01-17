@@ -68,7 +68,7 @@ public class Reader {
     public Hero createHero() {
         Logger.printDelimiter();
         Logger.print("Hero creation:");
-        Logger.print("Let's name your character (min 2 character, max 30)");
+        Logger.print("Let's name your character (min 2 character, max 10)");
         String name = readLine();
         Logger.lnprint("Let's choose a hero class: ");
         while (true) {
@@ -95,6 +95,8 @@ public class Reader {
     public void moveDirection() {
         while (controller.heroIsChosen()) {
             System.out.println(controller.getCurrentGameMap());
+            Logger.printDelimiter();
+            Logger.print(controller.getHeroCopy().toString());
             Logger.printDelimiter();
             Logger.print("Make your move:");
             Logger.print("(N, E, S, W) or \"GUI\" to change UI");
@@ -133,8 +135,14 @@ public class Reader {
             }
         }
         boolean fightResult = false;
-        if (isAccepted || new Random().nextBoolean())
-            fightResult = controller.fightSimulation(enemyType);
+        if (!isAccepted) {
+            if (new Random().nextBoolean()) {
+                Logger.print("You ran from battle!");
+                return false;
+            } else
+                Logger.print("You can't run! FIGHT!");
+        }
+        fightResult = controller.fightSimulation(enemyType);
         Logger.print(fightResult ? "You won the fight." : "You lost the fight");
         proposeArtifact();
         return fightResult;
@@ -142,7 +150,7 @@ public class Reader {
 
     private void proposeArtifact() {
         while (controller.getLastDroppedArtifact() != null) {
-            Logger.print("New artifact is dropped! " + controller.getLastDroppedArtifact() + " (yes/y/no/n/GUI)");
+            Logger.print("New artifact is dropped! " + controller.getLastDroppedArtifact() + " (yes/y/no/n)");
             String s = readLine();
             if (s == null)
                 continue;
@@ -150,8 +158,6 @@ public class Reader {
             if (s.equals("yes") || s.equals("y"))
                 controller.acceptNewArtifact();
             else if (s.equals("n") || s.equals("no"))
-                controller.refuseNewArtifact();
-            else if (isChangingUIRequest(s))
                 controller.refuseNewArtifact();
         }
     }

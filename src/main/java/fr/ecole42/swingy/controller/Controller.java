@@ -111,6 +111,7 @@ public class Controller {
         } else
             player.getCurrentHero().setWeapon((Weapon) lastDropped);
         player.deleteLastDropped();
+        saveProgress();
     }
 
     public void refuseNewArtifact() {

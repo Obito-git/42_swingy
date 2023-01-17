@@ -7,6 +7,7 @@ import fr.ecole42.swingy.model.enemies.Enemy;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = "character")
 public class Hero {
 	@Column (name = "name", unique = true)
+	@NotNull(message = "name can't be null")
 	@Size(min = 2, max = 10, message = "Heroes name length must be between 2 and 10 characters")
 	private String name;
 	@Column (name = "level")
