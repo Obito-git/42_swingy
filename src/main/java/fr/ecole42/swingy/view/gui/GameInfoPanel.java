@@ -106,7 +106,6 @@ public class GameInfoPanel extends JPanel implements ItemListener {
 				buildChooseHero();
 			} catch (Exception exception) {
 				errorLabel.setText("Name is already used");
-				exception.printStackTrace();
 			}
 		});
 
