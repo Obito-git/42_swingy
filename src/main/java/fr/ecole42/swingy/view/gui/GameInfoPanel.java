@@ -15,7 +15,6 @@ public class GameInfoPanel extends JPanel implements ItemListener {
 	private final JFrame frame;
 	private final JButton submit;
 	private final JButton changeUI;
-	private final JButton save;
 	private HeroInfoPanel heroInfoPanel;
 	private JComboBox<String> heroesNamesBox;
 	private List<Hero> heroes;
@@ -24,14 +23,13 @@ public class GameInfoPanel extends JPanel implements ItemListener {
 
 
 
-	public GameInfoPanel(Controller controller, JFrame frame, JButton submit, JButton changeUI, JButton save) {
+	public GameInfoPanel(Controller controller, JFrame frame, JButton submit, JButton changeUI) {
 		this.frame = frame;
 		this.controller = controller;
 		this.heroes = this.controller.getAllHeroes();
 		this.submit = submit;
 		this.changeUI = changeUI;
 		this.heroInfoPanel = new HeroInfoPanel();
-		this.save = save;
 		setBackground(Color.GRAY);
 		setLayout(new GridLayout(10, 1));
 
@@ -63,7 +61,6 @@ public class GameInfoPanel extends JPanel implements ItemListener {
 		heroInfoPanel.updateInfo(hero);
 		add(heroInfoPanel);
 		add(changeUI);
-		add(save);
 		setFocusable(false);
 		updateUI();
 	}

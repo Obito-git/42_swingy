@@ -38,10 +38,7 @@ public class MainFrameGUI extends JFrame {
             controller.setView(ViewMode.CONSOLE);
         });
 
-        JButton save = new JButton("Save progress");
-        save.addActionListener(e -> controller.saveProgress());
-
-        gameInfoPanel = new GameInfoPanel(controller, this, submit, changeUI, save);
+        gameInfoPanel = new GameInfoPanel(controller, this, submit, changeUI);
         gamePanel = new GamePanel(controller);
         gameInfoPanel.setPreferredSize(new Dimension(INFO_PANEL_WIDTH, WINDOW_HEIGHT));
         gamePanel.setPreferredSize(new Dimension(GAME_PANEL_WIDTH, WINDOW_HEIGHT));
